@@ -2,7 +2,7 @@ import Header from "./component/Header";
 import Product from "./component/Product";
 import Shop from "./component/Shop";
 import { PRODUCTS } from "./data/products";
-import CartContextProvider from "./context/cart-context";
+import CartContextProvider from "./context/CartContextProvider";
 
 const App = () => {
   return (
@@ -23,3 +23,4 @@ const App = () => {
 };
 
 export default App;
+// Moadl cart a faire

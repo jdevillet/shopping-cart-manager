@@ -1,12 +1,8 @@
-import { useContext } from "react";
 import { FaShoppingCart } from "react-icons/fa";
-import { CartContext } from "../context/cart-context";
 
-const CartIcon = () => {
-  const { items } = useContext(CartContext);
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+const CartIcon = ({ totalItems, onClick }) => {
   return (
-    <button className="cursor-pointer relative">
+    <button onClick={onClick} className="cursor-pointer relative">
       <FaShoppingCart size={20} />
       {totalItems > 0 && (
         <p

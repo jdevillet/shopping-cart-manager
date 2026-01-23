@@ -1,11 +1,6 @@
-import { createContext, useReducer } from "react";
+import { useReducer } from "react";
 import { PRODUCTS } from "../data/products";
-
-export const CartContext = createContext({
-  items: [],
-  addItemsToCart: () => {},
-  updateItemQuantity: () => {},
-});
+import { CartContext } from "./CartContext";
 
 function shoppingCartReducer(state, action) {
   if (action.type === "ADD_ITEM") {
@@ -43,15 +38,15 @@ function shoppingCartReducer(state, action) {
     const existingCartItem = cartCopy[existingCartItemIndex];
     const updatedProductQuantity = action.payload.amount;
 
-    const newProduct = {
+    const updatedItem = {
       ...existingCartItem,
       quantity: existingCartItem.quantity + updatedProductQuantity,
     };
 
-    if (newProduct.quantity <= 0) {
+    if (updatedItem.quantity <= 0) {
       cartCopy.splice(existingCartItemIndex, 1);
     } else {
-      cartCopy[existingCartItemIndex] = newProduct;
+      cartCopy[existingCartItemIndex] = updatedItem;
     }
 
     return {
