@@ -23,4 +23,3 @@ const App = () => {
 };
 
 export default App;
-// Moadl cart a faire

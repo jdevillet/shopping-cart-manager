@@ -54,6 +54,13 @@ function shoppingCartReducer(state, action) {
       items: cartCopy,
     };
   }
+
+  if (action.type === "RESET_ITEMS") {
+    return {
+      ...state,
+      items: [],
+    };
+  }
   return state;
 }
 
@@ -82,10 +89,17 @@ export default function CartContextProvider({ children }) {
       },
     });
   }
+
+  function handleResetCart() {
+    shoppingCartDispatch({
+      type: "RESET_ITEMS",
+    });
+  }
   const ctxValue = {
     items: shoppingCartState.items,
     addItemsToCart: handleAddItemToCart,
     updateItemQuantity: handleUpdateCartItemQuantity,
+    resetCart: handleResetCart,
   };
 
   return (
