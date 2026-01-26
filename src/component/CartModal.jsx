@@ -1,8 +1,8 @@
 import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import { CartContext } from "../context/CartContext";
-import toast from "react-hot-toast";
 import showToast from "./ShowToast";
+import { FaShippingFast } from "react-icons/fa";
 
 const CartModal = forwardRef(function Modal(props, ref) {
   const { items, addItemsToCart, updateItemQuantity, resetCart } =
@@ -43,6 +43,10 @@ const CartModal = forwardRef(function Modal(props, ref) {
     0,
   );
 
+  const MAX = 65;
+  const progress = Math.min((totalPrice / MAX) * 100, 100);
+  const remaining = Math.max(MAX - totalPrice, 0);
+
   return createPortal(
     <dialog
       ref={dialogRef}
@@ -52,7 +56,39 @@ const CartModal = forwardRef(function Modal(props, ref) {
         Your Shopping Cart
       </p>
 
-      <div className="space-y-4 mb-6 max-h-96 overflow-y-auto">
+      <div className="p-4 bg-black rounded-lg border border-gray-800 text-white space-y-3">
+        <p className="font-bold text-sm">Free shipping from $65</p>
+
+        <div className="mt-1 flex justify-center">
+          <div className="relative w-[90%]">
+            <progress
+              className="my-progress w-full"
+              value={totalPrice}
+              max={MAX}
+            />
+
+            <div
+              className="absolute -top-3.5 text-xl transition-all duration-300"
+              style={{ left: `calc(${progress}% - 18px)` }}
+            >
+              <FaShippingFast className="text-white drop-shadow" />
+            </div>
+          </div>
+        </div>
+
+        {remaining > 0 ? (
+          <p className="text-xs text-gray-300">
+            Add <span className="font-semibold">${remaining.toFixed(2)}</span>{" "}
+            more to unlock free shipping.
+          </p>
+        ) : (
+          <p className="text-sm font-semibold text-emerald-300">
+            You unlocked free shipping!
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-4 my-6 max-h-96 overflow-y-auto">
         {emptyCart ? (
           <p className="text-center text-gray-500 py-8">Your cart is empty</p>
         ) : (
