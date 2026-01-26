@@ -1,6 +1,8 @@
 import { forwardRef, useContext, useImperativeHandle, useRef } from "react";
 import { createPortal } from "react-dom";
 import { CartContext } from "../context/CartContext";
+import toast from "react-hot-toast";
+import showToast from "./ShowToast";
 
 const CartModal = forwardRef(function Modal(props, ref) {
   const { items, addItemsToCart, updateItemQuantity, resetCart } =
@@ -30,7 +32,7 @@ const CartModal = forwardRef(function Modal(props, ref) {
       return;
     }
 
-    alert(`Checkout successful! Total: $${totalPrice}`);
+    showToast();
 
     dialogRef.current?.close();
     resetCart();
